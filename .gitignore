@@ -1,0 +1,52 @@
+### Maven ###
+target/
+out/
+
+### Maven Wrapper ###
+!.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+### FishTrack data ###
+data/
+*.bin
+*.bak
+*.tmp
+
+### Logs ###
+*.log
+
+### Java crash reports ###
+hs_err_pid*
+
+### Environment files ###
+.env
+.env.*
+
+### Operating systems ###
+.DS_Store
+Thumbs.db
