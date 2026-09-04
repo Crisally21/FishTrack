@@ -31,7 +31,7 @@ public class FishingSpot {
         this.depthMeters = depthMeters;
         this.bottomType = Objects.requireNonNull(bottomType, "Тип дна не может быть null");
         this.hasCurrent = hasCurrent;
-        this.description = description;
+        this.description = description == null ? "" : description.trim();
     }
 
     public static FishingSpot create(String name, Coordinates coordinates, double depthMeters,
@@ -47,7 +47,7 @@ public class FishingSpot {
 
     private static void validateDepth(double depthMeters) {
         if (!Double.isFinite(depthMeters) || depthMeters < 0) {
-            throw new ValidationException("Глубина должна быть конечным не отрицательным числом");
+            throw new ValidationException("Глубина должна быть конечным неотрицательным числом");
         }
     }
 
