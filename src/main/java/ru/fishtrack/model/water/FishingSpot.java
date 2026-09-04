@@ -13,7 +13,7 @@ public class FishingSpot {
     private boolean hasCurrent;
     private String description;
 
-    public FishingSpot(EntityId id,
+    private FishingSpot(EntityId id,
                        String name,
                        Coordinates coordinates,
                        double depthMeters,
@@ -31,6 +31,6 @@ public class FishingSpot {
 
     public static FishingSpot create(String name, Coordinates coordinates, double depthMeters,
                                      BottomType bottomType, boolean hasCurrent, String description) {
-        return new FishingSpot(name, coordinates, depthMeters, bottomType, hasCurrent, description);
+        return new FishingSpot(EntityId.random(), name, coordinates, depthMeters, bottomType, hasCurrent, description);
     }
 }
