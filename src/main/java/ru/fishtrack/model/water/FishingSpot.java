@@ -1,5 +1,6 @@
 package ru.fishtrack.model.water;
 
+import ru.fishtrack.exception.ValidationException;
 import ru.fishtrack.model.BottomType;
 import ru.fishtrack.model.common.Coordinates;
 import ru.fishtrack.model.common.EntityId;
@@ -16,17 +17,19 @@ public class FishingSpot {
     private String description;
 
     private FishingSpot(EntityId id,
-                       String name,
-                       Coordinates coordinates,
-                       double depthMeters,
-                       BottomType bottomType,
-                       boolean hasCurrent,
-                       String description) {
-        this.id = id;
-        this.name = name;
-        this.coordinates = coordinates;
+                        String name,
+                        Coordinates coordinates,
+                        double depthMeters,
+                        BottomType bottomType,
+                        boolean hasCurrent,
+                        String description) {
+        this.id = Objects.requireNonNull(id, "ID точки не может быть null");
+        validateName(name);
+        validateDepth(depthMeters);
+        this.name = name.trim();
+        this.coordinates = Objects.requireNonNull(coordinates, "Координаты точки не могут быть null");
         this.depthMeters = depthMeters;
-        this.bottomType = bottomType;
+        this.bottomType = Objects.requireNonNull(bottomType, "Тип дна не может быть null");
         this.hasCurrent = hasCurrent;
         this.description = description;
     }
@@ -36,16 +39,30 @@ public class FishingSpot {
         return new FishingSpot(EntityId.random(), name, coordinates, depthMeters, bottomType, hasCurrent, description);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private static void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new ValidationException("Название точки не может быть пустым");
+        }
     }
 
-    public void setDepthMeters(double depthMeters) {
-        this.depthMeters = depthMeters;
+    private static void validateDepth(double depthMeters) {
+        if (!Double.isFinite(depthMeters) || depthMeters < 0) {
+            throw new ValidationException("Глубина должна быть конечным не отрицательным числом");
+        }
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void rename(String newName) {
+        validateName(newName);
+        this.name = newName.trim();
+    }
+
+    public void updateDepth(double newDepth) {
+        validateDepth(newDepth);
+        this.depthMeters = newDepth;
+    }
+
+    public void updateDescription(String newDescription) {
+        this.description = newDescription == null ? "" : newDescription.trim();
     }
 
     public EntityId getId() {
@@ -80,17 +97,11 @@ public class FishingSpot {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof FishingSpot that)) return false;
-        return Double.compare(depthMeters,
-                              that.depthMeters) == 0 && hasCurrent == that.hasCurrent && Objects.equals(
-                id,
-                that.id) && Objects.equals(name, that.name) && Objects.equals(coordinates,
-                                                                              that.coordinates) && bottomType == that.bottomType && Objects.equals(
-                description,
-                that.description);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, coordinates, depthMeters, bottomType, hasCurrent, description);
+        return Objects.hashCode(id);
     }
 }
