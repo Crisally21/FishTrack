@@ -1,5 +1,7 @@
 package ru.fishtrack.model.common;
 
+import ru.fishtrack.exception.ValidationException;
+
 import java.util.Objects;
 
 
