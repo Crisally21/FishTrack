@@ -3,10 +3,10 @@ package ru.fishtrack.model.common;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EntityId {
+public final class EntityId {
     private final UUID value;
 
-    public EntityId(UUID value) {
+    private EntityId(UUID value) {
         this.value = Objects.requireNonNull(
                 value,
                 "EntityId value не может быть null"

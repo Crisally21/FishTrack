@@ -5,7 +5,7 @@ import ru.fishtrack.exception.ValidationException;
 import java.util.Objects;
 
 
-public class Coordinates {
+public final class Coordinates {
     private final double latitude;
     private final double longitude;
 
@@ -19,7 +19,7 @@ public class Coordinates {
         return new Coordinates(latitude, longitude);
     }
 
-    public static void validate(double latitude, double longitude) {
+    private static void validate(double latitude, double longitude) {
         if (!Double.isFinite(latitude)) {
             throw new ValidationException("Широта должна быть конечным числом");
         }
